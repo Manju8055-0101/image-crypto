@@ -1,0 +1,2 @@
+import{j as c}from"./animation-BfXDZtOL.js";import"./vendor-1t_B_YEV.js";const d=({children:r,className:o="",hover:e=!1,glow:t=!1,...a})=>c.jsx("div",{className:`bg-crypto-bg-secondary/80 backdrop-blur-lg border rounded-2xl p-6 transition-all duration-300 ${e?"hover:border-crypto-accent/30 hover:shadow-lg hover:shadow-crypto-accent/10 cursor-pointer":"border-crypto-accent/10"} ${t?"neon-border":""} ${o}`,...a,children:r});export{d as C};
+//# sourceMappingURL=Card-DuSNpccM.js.map
