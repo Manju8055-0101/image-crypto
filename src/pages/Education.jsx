@@ -1,0 +1,210 @@
+import React, { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import Card from '../components/common/Card'
+import Button from '../components/common/Button'
+
+const Education = () => {
+  const [activeModule, setActiveModule] = useState(null)
+
+  const modules = [
+    {
+      id: 'history',
+      title: 'History of Steganography',
+      icon: '📜',
+      duration: '10 min',
+      lessons: [
+        { title: 'Ancient Origins', content: 'Steganography dates back to ancient Greece, where hidden messages were tattooed on shaved heads of messengers and covered by regrown hair.' },
+        { title: 'World War II', content: 'During WWII, spies used invisible ink, microdots, and null ciphers to conceal messages within seemingly innocent communications.' },
+        { title: 'Digital Age', content: 'With the rise of computers, digital steganography emerged, hiding data within image, audio, and video files.' },
+      ],
+    },
+    {
+      id: 'techniques',
+      title: 'Core Techniques',
+      icon: '🔧',
+      duration: '15 min',
+      lessons: [
+        { title: 'LSB (Least Significant Bit)', content: 'LSB replaces the least significant bits of pixel data with secret message bits. Simple but vulnerable to compression.' },
+        { title: 'PVD (Pixel Value Differencing)', content: 'PVD embeds data by modifying the difference between neighboring pixels, providing better capacity and security.' },
+        { title: 'DWT (Discrete Wavelet Transform)', content: 'DWT operates in frequency domain, hiding data in transform coefficients. Most robust against attacks.' },
+      ],
+    },
+    {
+      id: 'security',
+      title: 'Security Best Practices',
+      icon: '🛡️',
+      duration: '12 min',
+      lessons: [
+        { title: 'Password Protection', content: 'Always encrypt your message before embedding. Use strong passwords with PBKDF2 key derivation.' },
+        { title: 'Algorithm Selection', content: 'Choose algorithms based on your needs: LSB for speed, PVD for balance, DWT for maximum security.' },
+        { title: 'Detection Prevention', content: 'To avoid detection, limit embedding capacity and avoid modifying image statistics significantly.' },
+      ],
+    },
+    {
+      id: 'applications',
+      title: 'Real-World Applications',
+      icon: '🌍',
+      duration: '8 min',
+      lessons: [
+        { title: 'Digital Watermarking', content: 'Artists and companies use steganography to watermark their work, proving ownership and tracking distribution.' },
+        { title: 'Covert Communication', content: 'Journalists and activists in restricted regions use steganography to communicate safely.' },
+        { title: 'Data Integrity', content: 'Steganography can embed checksums to verify image hasn\'t been tampered with.' },
+      ],
+    },
+  ]
+
+  return (
+    <div className="min-h-screen py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-12"
+        >
+          <h1 className="text-4xl font-bold gradient-text mb-4">Learn Steganography</h1>
+          <p className="text-crypto-text-secondary max-w-2xl mx-auto">
+            Master the art of hiding secrets in plain sight through our comprehensive educational modules
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 }}
+            className="lg:col-span-1"
+          >
+            <Card>
+              <h2 className="text-xl font-semibold text-white mb-4">Modules</h2>
+              <div className="space-y-3">
+                {modules.map((module) => (
+                  <button
+                    key={module.id}
+                    onClick={() => setActiveModule(activeModule === module.id ? null : module.id)}
+                    className={`w-full p-4 rounded-xl text-left transition-all duration-300 ${
+                      activeModule === module.id
+                        ? 'bg-crypto-accent/10 border border-crypto-accent/30'
+                        : 'bg-crypto-bg-tertiary border border-transparent hover:border-crypto-accent/20'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="text-2xl">{module.icon}</span>
+                      <div className="flex-1">
+                        <h3 className="text-white font-medium">{module.title}</h3>
+                        <p className="text-crypto-text-secondary text-sm">{module.duration}</p>
+                      </div>
+                      <svg
+                        className={`w-5 h-5 text-crypto-accent transition-transform duration-300 ${
+                          activeModule === module.id ? 'rotate-180' : ''
+                        }`}
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </Card>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.4 }}
+            className="lg:col-span-2"
+          >
+            <AnimatePresence mode="wait">
+              {activeModule ? (
+                <motion.div
+                  key={activeModule}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                >
+                  <Card>
+                    {modules.filter(m => m.id === activeModule).map(module => (
+                      <div key={module.id}>
+                        <div className="flex items-center gap-4 mb-6 pb-6 border-b border-crypto-accent/10">
+                          <span className="text-4xl">{module.icon}</span>
+                          <div>
+                            <h2 className="text-2xl font-bold text-white">{module.title}</h2>
+                            <p className="text-crypto-text-secondary">{module.duration} of content</p>
+                          </div>
+                        </div>
+
+                        <div className="space-y-6">
+                          {module.lessons.map((lesson, index) => (
+                            <div
+                              key={index}
+                              className="p-4 bg-crypto-bg-tertiary rounded-xl"
+                            >
+                              <h3 className="text-lg font-semibold text-crypto-accent mb-2">
+                                {index + 1}. {lesson.title}
+                              </h3>
+                              <p className="text-crypto-text-secondary leading-relaxed">
+                                {lesson.content}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+
+                        <div className="mt-8 flex gap-4">
+                          <Button variant="secondary" onClick={() => setActiveModule(null)}>
+                            Back to Modules
+                          </Button>
+                          <Button variant="primary">
+                            Take Quiz
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                  </Card>
+                </motion.div>
+              ) : (
+                <Card className="h-full flex items-center justify-center min-h-[400px]">
+                  <div className="text-center">
+                    <svg className="mx-auto h-20 w-20 text-crypto-accent/30 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                    <h3 className="text-xl font-semibold text-white mb-2">Select a Module</h3>
+                    <p className="text-crypto-text-secondary">
+                      Choose a module from the list to start learning
+                    </p>
+                  </div>
+                </Card>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+          className="mt-16"
+        >
+          <Card>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+              {[
+                { value: '4', label: 'Modules' },
+                { value: '12', label: 'Lessons' },
+                { value: '45', label: 'Minutes' },
+                { value: '∞', label: 'Knowledge' },
+              ].map((stat, index) => (
+                <div key={stat.label}>
+                  <div className="text-4xl font-bold gradient-text mb-2">{stat.value}</div>
+                  <div className="text-crypto-text-secondary">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+          </Card>
+        </motion.div>
+      </div>
+    </div>
+  )
+}
+
+export default Education
