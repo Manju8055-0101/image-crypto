@@ -7,7 +7,9 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 export default defineConfig({
-  base: process.env.NODE_ENV === 'production' ? '/image-crypto/' : '/',
+  base: process.env.NODE_ENV === 'production' 
+    ? '/image-crypto/'
+    : '/',
   plugins: [react()],
   resolve: {
     alias: {
